@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>ButterflyMX 444</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        * {
+            color: #f3f4f6;
+            font-size: 1rem;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        body {
+            background-color: #18181b;
+        }
+
+        button {
+            background-color: #0284c7;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: none;
+
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 200ms;
+        }
+
+        button:hover {
+            background-color: #0369a1;
+            cursor: pointer;
+        }
+
+        input {
+            background-color: #075985;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: none;
+        }
+
+        ::placeholder {
+            color: lightgray;
+        }
+
+        label {
+            font-size: smaller;
+        }
+
+        .container-child {
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 512px;
+        }
+
+        .container-parent {
+            width: 100%;
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (min-width: 640px) {
+            .container-parent {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            * {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-parent">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "base.html.jinja" %}
+
+{% block content %}
+    <form class="container-child" action="{{ login_action }}" method="post">
+        <input
+            id="username"
+            type="text"
+            autocomplete="username"
+            name="username"
+            placeholder="Username"
+        >
+
+        <input
+            id="password"
+            type="password"
+            autocomplete="password"
+            name="password"
+            placeholder="Password123"
+        >
+
+        <button type="submit">
+            Login
+        </button>
+    </form>
+{% endblock %}

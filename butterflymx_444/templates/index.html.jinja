@@ -1,0 +1,13 @@
+{% extends "base.html.jinja" %}
+
+{% block content %}
+    <form class="container-child" action="{{ open_access_point_action }}" method="post">
+        {% for tenant in bmx_tenants %}
+            {% for access_point in tenant.access_points %}
+                <button type="submit" name="access_point_id" value="{{ access_point.id }}">
+                    Open {{ access_point.name }}
+                </button>
+            {% endfor %}
+        {% endfor %}
+    </form>
+{% endblock %}
