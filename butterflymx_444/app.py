@@ -7,7 +7,7 @@ from butterflymx import ButterflyMX, EmailAndPassword, OauthCredentials, Tenant
 from fastapi import Cookie, Depends, FastAPI, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
-from starlette.responses import RedirectResponse, Response
+from starlette.responses import FileResponse, RedirectResponse, Response
 
 import butterflymx_444.settings as settings
 from butterflymx_444 import credential_cache
@@ -99,6 +99,10 @@ async def authorized_user(token: Annotated[str | None, Cookie()] = None) -> None
 
         raise HttpResponseException(response=response)
 
+
+@app.get('/favicon.ico')
+async def app_favicon_ico():
+    return FileResponse('static/favicon.ico')
 
 @app.get('/login')
 async def app_login(request: Request):
