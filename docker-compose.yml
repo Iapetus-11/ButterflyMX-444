@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  butterflymx_444:
+    build:
+      dockerfile: Dockerfile
+      context: "."
+    ports:
+      - "8080:80"
+    init: true
+    restart: on-failure
+    env_file: .env
