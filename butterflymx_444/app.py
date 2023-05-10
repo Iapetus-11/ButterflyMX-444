@@ -146,7 +146,7 @@ async def app_access_point_open_submit(access_point_id: Annotated[str, Form()]):
             async with await get_bmx_initializer() as bmx:
                 await bmx.open_access_point(tenant, access_point)
 
-            return
+            return RedirectResponse(url=app.url_path_for(app_index.__name__), status_code=303)
 
 
 @app.get('/', dependencies=[Depends(authorized_user)])
