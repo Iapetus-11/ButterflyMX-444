@@ -104,6 +104,7 @@ async def authorized_user(token: Annotated[str | None, Cookie()] = None) -> None
 async def app_favicon_ico():
     return FileResponse('static/favicon.ico')
 
+
 @app.get('/login')
 async def app_login(request: Request):
     return templates.TemplateResponse('login.html.jinja', {
@@ -113,11 +114,7 @@ async def app_login(request: Request):
 
 
 @app.post('/login')
-async def app_login_submit(
-    request: Request,
-    username: Annotated[str, Form()],
-    password: Annotated[str, Form()],
-):
+async def app_login_submit(username: Annotated[str, Form()], password: Annotated[str, Form()]):
     user = get_user(username)
 
     if user is None:
