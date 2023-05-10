@@ -18,6 +18,7 @@ WORKDIR /ButterflyMX-444
 
 COPY --from=build /build/.venv/ /ButterflyMX-444/.venv/
 
+COPY static /ButterflyMX-444/static
 COPY butterflymx_444 /ButterflyMX-444/butterflymx_444
 
 RUN chmod +x /ButterflyMX-444/.venv/bin/uvicorn
