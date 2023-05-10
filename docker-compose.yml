@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
       context: "."
     ports:
-      - "8080:80"
+      - "44444:80"
     init: true
     restart: on-failure
     env_file: .env
