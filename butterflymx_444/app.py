@@ -92,12 +92,8 @@ async def app_handle_http_response_exception(request: Request, call_next: Any):
 
 
 async def authorized_user(token: Annotated[str | None, Cookie()] = None) -> None:
-    authorized = token is not None and validate_jwt_token(token)
-
-    if not authorized:
-        response = RedirectResponse(url="/login/")
-
-        raise HttpResponseException(response=response)
+    if not validate_jwt_token(token):
+        raise HttpResponseException(response=RedirectResponse(url="/login/"))
 
 
 @app.get('/favicon.ico')

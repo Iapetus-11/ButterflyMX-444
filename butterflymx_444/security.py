@@ -60,12 +60,16 @@ def create_jwt_token(username: str) -> tuple[str, datetime]:
     return token, expires_at
 
 
-def validate_jwt_token(token: str) -> bool:
+def validate_jwt_token(token: str | None) -> bool:
     """Returns True if the token is valid"""
 
+    if token is None:
+        return False
+
     try:
-        jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
-        return True
+        decoded = jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
+
+        return decoded.get('sub') and get_user(decoded['sub'])
     except (JWTError, ExpiredSignatureError, JWTClaimsError):
         pass
 
