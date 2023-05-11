@@ -69,7 +69,7 @@ def validate_jwt_token(token: str | None) -> bool:
     try:
         decoded = jwt.decode(token, settings.JWT_SECRET, algorithms=['HS256'])
 
-        return decoded.get('sub') and get_user(decoded['sub'])
+        return bool(decoded.get('sub') and get_user(decoded['sub']))
     except (JWTError, ExpiredSignatureError, JWTClaimsError):
         pass
 
