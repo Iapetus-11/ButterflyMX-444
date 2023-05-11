@@ -1,0 +1,37 @@
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    name: CI
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11
+          architecture: x64
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached dependencies
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run mypy
+        run: poetry run mypy
+
+      - name: Run Ruff
+        run: poetry run ruff check .
