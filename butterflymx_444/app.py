@@ -4,7 +4,7 @@ from datetime import timedelta
 from typing import Annotated, Any
 
 from butterflymx import ButterflyMX, EmailAndPassword, OauthCredentials, Tenant
-from fastapi import Cookie, Depends, FastAPI, Form, HTTPException
+from fastapi import Cookie, Depends, FastAPI, Form
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 from starlette.responses import FileResponse, RedirectResponse, Response
@@ -110,16 +110,26 @@ async def app_login(request: Request):
 
 
 @app.post('/login')
-async def app_login_submit(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+async def app_login_submit(
+    request: Request,
+    username: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+):
+    def make_incorrect_credentials_response() -> Response:
+        return templates.TemplateResponse('incorrect_credentials.html.jinja', {
+            'request': request,
+            'login_action': app.url_path_for(app_login.__name__),
+        })
+
     user = get_user(username)
 
     if user is None:
-        raise HTTPException(status_code=401)
+        return make_incorrect_credentials_response()
 
     hashed_password, _ = hash_password(password, user.salt)
 
     if not compare_passwords(hashed_password, user.password):
-        raise HTTPException(status_code=401)
+        return make_incorrect_credentials_response()
 
     token, _ = create_jwt_token(user.username)
 
